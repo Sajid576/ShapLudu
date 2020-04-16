@@ -8,8 +8,12 @@ from pygame import mixer
 # Intialize the pygame
 pygame.init()
 
+
 # create the screen
-screen = pygame.display.set_mode((800, 600))
+screenWidth=800
+screenHeight=600
+
+screen = pygame.display.set_mode((screenWidth, screenHeight))
 
 #Background
 background = pygame.image.load('bg.jpg')
@@ -27,9 +31,10 @@ pygame.display.set_icon(icon)
 running=True
 while running:
 
-     
-    # Background Image
-    screen.blit(background, (0, 0))
+      # RGB = Red, Green, Blue
+    screen.fill((255, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    pygame.display.update()
