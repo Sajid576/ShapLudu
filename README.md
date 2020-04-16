@@ -1,6 +1,6 @@
 instructions for running this game:
-1)install python
-2)install pygame library
+1)install python.
+2)install pygame library.
 
 # ShapLudu
 This game is made with python for fun purpose . Later I will think about uploading it to facebook.
