@@ -114,24 +114,16 @@ def player1():
 
 
 class LuduBoard:
-    def __init__(self, number, upperLeftX,upperLeftY,upperRightX,upperRightY,lowerLeftX,lowerLeftY,lowerRightX,lowerRightY):
+    def __init__(self, number, upperLeftX,upperLeftY):
             self.number = number
             self.upperLeftX = upperLeftX
             self.upperLeftY=upperLeftY
 
-            self.upperRightX = upperRightX
-            self.upperRightY=upperRightY
-
-            self.lowerLeftX=lowerLeftX
-            self.lowerLeftY=lowerLeftY
-
-            self.lowerRightX=lowerRightX
-            self.lowerRightY=lowerRightY
+           
 
     def myfunc(self):
-        pygame.draw.polygon(screen, blue, 
-                    [(self.upperLeftX, self.upperLeftY), (self.upperRightX, self.upperRightY), 
-                    (self.lowerRightX, self.lowerRightY), (self.lowerLeftX, self.lowerLeftY)]) 
+       # draw a rectangle
+        pygame.draw.rect(screen, blue, pygame.Rect(self.upperLeftX, self.upperLeftY, 80, 60), 5)
         print( self.number)
 
 
@@ -147,15 +139,9 @@ def buildLuduBoard():
         for i in range(1,11,1):
             topLeftX=initX
             topLeftY=initY
-            topRightX=initX+incrX
-            topRightY=initY
+            
 
-            lowerLeftX=topLeftX
-            lowerLeftY=initY+incrY
-            lowerRightX=topRightX
-            lowerRightY=initY+incrY
-
-            obj=LuduBoard(cnt,topLeftX,topLeftY,topRightX,topRightY,lowerLeftX,lowerLeftY,lowerRightX,lowerRightY)
+            obj=LuduBoard(cnt,topLeftX,topLeftY)
             cnt-=1      #decreament counter
             list.append(obj)
             
@@ -166,22 +152,15 @@ def buildLuduBoard():
                 #if row number is ODD ,box will build up from left to right
                 if(i%2 !=0):
                         topLeftX += incrX
-                        topRightX+=incrX
-                        lowerLeftX+=incrX
-                        lowerRightX+=incrX
-
-                        obj=LuduBoard(cnt,topLeftX,topLeftY,topRightX,topRightY,lowerLeftX,lowerLeftY,lowerRightX,lowerRightY)
+                        
+                        obj=LuduBoard(cnt,topLeftX,topLeftY)
                         cnt-=1      #decreament counter
                         list.append(obj)
                 #if row number is EVEN , box will build up from right to left
                 else:
                     topLeftX -= incrX
-                    topRightX-=incrX
-                    lowerLeftX-=incrX
-                    lowerRightX-=incrX
-
-
-                    obj=LuduBoard(cnt,topLeftX,topLeftY,topRightX,topRightY,lowerLeftX,lowerLeftY,lowerRightX,lowerRightY)
+                    
+                    obj=LuduBoard(cnt,topLeftX,topLeftY)
                     cnt-=1      #decreament counter
                     list.append(obj)
 
