@@ -73,6 +73,9 @@ player1_Ychange = 0
 myfont = pygame.font.SysFont('Comic Sans MS', 15)
 list=[]
 
+#snakes
+
+
 def throwDice(mx,my):
     
     if(mx >= 10 and mx <= 10+30 and my >= 550 and my<= 550+30 ):
@@ -108,9 +111,19 @@ def player1():
 
 #def moveUser():
 
+def buildSnakes():
 
-
-
+class Snakes:
+    def __init__(self,mouthIndex,AssIndex):
+        self.mouthIndex=mouthIndex
+        self.AssIndex=AssIndex
+        
+    
+class Laddder:
+    def __init__(self,belowIndex,topIndex):
+        self.belowIndex=belowIndex
+        self.topIndex=topIndex
+        
 
 
 class LuduBoard:
@@ -120,7 +133,6 @@ class LuduBoard:
             self.upperLeftY=upperLeftY
 
            
-
     def drawRectangle(self):
        # draw a rectangle
         pygame.draw.rect(screen, blue, pygame.Rect(self.upperLeftX, self.upperLeftY, 80, 60), 5)
@@ -128,13 +140,11 @@ class LuduBoard:
 
     def drawNumber(self):
         textNumber = myfont.render(str(self.number), False,white)
-        screen.blit(textNumber, ( (self.upperLeftX+self.upperLeftX)/2 ,(self.upperLeftY+self.upperLeftY)/2 ))
+        screen.blit(textNumber, ( (self.upperLeftX+80/2) ,self.upperLeftY+ 10))
         
     
 
-def buildLuduBoard():
-
-        
+def buildLuduBoard():   
         initX=0
         initY=0
         incrX=80
@@ -151,9 +161,6 @@ def buildLuduBoard():
             list.append(obj)
             
             for j in range(2,11,1):
-                
-               
-
                 #if row number is ODD ,box will build up from left to right
                 if(i%2 !=0):
                         topLeftX += incrX
@@ -177,6 +184,8 @@ def buildLuduBoard():
 
 
 buildLuduBoard()
+buildSnakes()
+buildLadders()
 
 def showBoard():
     for x in list:
