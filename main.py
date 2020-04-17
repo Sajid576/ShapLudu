@@ -69,12 +69,15 @@ player1_Y = 0
 player1_Xchange = 5
 player1_Ychange = 0
 
+#square shaped Box
+boxSize=80
+list=[]
 
 def throwDice(mx,my):
     
     if(mx >= 10 and mx <= 10+30 and my >= 550 and my<= 550+30 ):
-        global Dice_val 
         #returns an integer randomly between 1 & 6 including these points
+        global Dice_val 
         Dice_val= random.randint(1,6)
         print("val is: "+str(Dice_val))
         
@@ -103,13 +106,11 @@ def ShowDice():
 def player1():
         screen.blit(player1_Img, (player1_X, player1_Y))
 
-def moveUser():
-      global player1_X,player1_Xchange
-
-      player1_X=player1_X+player1_Xchange  
+#def moveUser():
 
 
-boxSize=80
+
+
 
 
 class LuduBoard:
@@ -129,30 +130,77 @@ class LuduBoard:
 
     def myfunc(self):
         pygame.draw.polygon(screen, blue, 
-                    [(upperLeftX, upperLeftY), (upperRightX, upperRightY), 
-                    (lowerRightX, lowerRightY), (lowerLeftX, lowerLeftY)]) 
+                    [(self.upperLeftX, self.upperLeftY), (self.upperRightX, self.upperRightY), 
+                    (self.lowerRightX, self.lowerRightY), (self.lowerLeftX, self.lowerLeftY)]) 
         print( self.number)
 
 
 def buildLuduBoard():
-    
 
-    #index is decrementing by 1 from 100 to 1 
-    for i in range(100,1,-1):
         
-        obj=LuduBoard(i)
+        initX=0
+        initY=0
+        incrX=80
+        incrY=60
+        cnt=100
 
+        for i in range(1,11,1):
+            topLeftX=initX
+            topLeftY=initY
+            topRightX=initX+incrX
+            topRightY=initY
+
+            lowerLeftX=topLeftX
+            lowerLeftY=initY+incrY
+            lowerRightX=topRightX
+            lowerRightY=initY+incrY
+
+            obj=LuduBoard(cnt,topLeftX,topLeftY,topRightX,topRightY,lowerLeftX,lowerLeftY,lowerRightX,lowerRightY)
+            cnt-=1      #decreament counter
+            list.append(obj)
+            
+            for j in range(2,11,1):
+                
+               
+
+                #if row number is ODD ,box will build up from left to right
+                if(i%2 !=0):
+                        topLeftX += incrX
+                        topRightX+=incrX
+                        lowerLeftX+=incrX
+                        lowerRightX+=incrX
+
+                        obj=LuduBoard(cnt,topLeftX,topLeftY,topRightX,topRightY,lowerLeftX,lowerLeftY,lowerRightX,lowerRightY)
+                        cnt-=1      #decreament counter
+                        list.append(obj)
+                #if row number is EVEN , box will build up from right to left
+                else:
+                    topLeftX -= incrX
+                    topRightX-=incrX
+                    lowerLeftX-=incrX
+                    lowerRightX-=incrX
+
+
+                    obj=LuduBoard(cnt,topLeftX,topLeftY,topRightX,topRightY,lowerLeftX,lowerLeftY,lowerRightX,lowerRightY)
+                    cnt-=1      #decreament counter
+                    list.append(obj)
+
+            initX=topLeftX
+            initY=topLeftY+incrY
+
+
+
+
+
+buildLuduBoard()
+
+def showBoard():
+    for x in list:
+        x.myfunc()
 
 #Game loop
 running=True
 while running:
-
-     # Background Image
-    #screen.blit(background, (0, 0))
-    #buildLuduBoard()
-    
-    ShowDice()
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -162,8 +210,9 @@ while running:
             print(mx,my)
             throwDice(mx,my)
            
- 
+    showBoard()
 
+    ShowDice()
     player1()
     
     #this update() is called at the end of the while loop
