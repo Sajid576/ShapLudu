@@ -70,7 +70,7 @@ player1_Xchange = 5
 player1_Ychange = 0
 
 #square shaped Box
-boxSize=80
+myfont = pygame.font.SysFont('Comic Sans MS', 15)
 list=[]
 
 def throwDice(mx,my):
@@ -121,11 +121,16 @@ class LuduBoard:
 
            
 
-    def myfunc(self):
+    def drawRectangle(self):
        # draw a rectangle
         pygame.draw.rect(screen, blue, pygame.Rect(self.upperLeftX, self.upperLeftY, 80, 60), 5)
         print( self.number)
 
+    def drawNumber(self):
+        textNumber = myfont.render(str(self.number), False,white)
+        screen.blit(textNumber, ( (self.upperLeftX+self.upperLeftX)/2 ,(self.upperLeftY+self.upperLeftY)/2 ))
+        
+    
 
 def buildLuduBoard():
 
@@ -175,8 +180,8 @@ buildLuduBoard()
 
 def showBoard():
     for x in list:
-        x.myfunc()
-
+        x.drawRectangle()
+        x.drawNumber()
 #Game loop
 running=True
 while running:
