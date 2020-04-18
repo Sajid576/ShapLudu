@@ -65,15 +65,18 @@ dice_six=pygame.transform.scale(dice_six, (30,30))
 player1_Img = pygame.image.load('images/player.jpg')
 player1_Img = pygame.transform.scale(player1_Img, (40,40))
 player1_X = 0
-player1_Y = 0
-player1_Xchange = 5
-player1_Ychange = 0
+player1_Y = screenHeight-40
+player1Index=0
+Player1_validity=0
+move=0
+userDestinationX=0
+userDestinationY=0
 
 #square shaped Box
 myfont = pygame.font.SysFont('Comic Sans MS', 15)
 list=[]
-
-#snakes
+indexToRowDict={}
+indexToCoordinate={}
 
 
 def throwDice(mx,my):
@@ -83,6 +86,7 @@ def throwDice(mx,my):
         global Dice_val 
         Dice_val= random.randint(1,6)
         print("val is: "+str(Dice_val))
+        checkValidity()
         
 
 def ShowDice():
@@ -107,11 +111,52 @@ def ShowDice():
      
 
 def player1():
+    
+    if(Player1_validity==1):
         screen.blit(player1_Img, (player1_X, player1_Y))
 
-#def moveUser():
 
-def buildSnakes():
+
+def checkValidity():
+        global Player1_validity
+        global player1Index
+
+        if (Player1_validity==1):
+            movePlayer1()
+        else:
+            if(Dice_val==1):
+                player1Index=1
+                Player1_validity=1
+            else:
+                Player1_validity=0
+
+            
+def movePlayer1():
+    global indexToCoordinate
+    global userDestinationX,userDestinationY
+    global player1_X,player1_Y
+    global player1Index
+
+    userDestinationIndex=player1Index
+    userDestinationIndex += Dice_val
+    
+    for x in list:
+       if( x.getNumber()== userDestinationIndex):
+            userDestinationX,userDestinationY =x.getSquareBoxCenterPosition()
+            
+           
+            print("source: "+str(player1Index) + " dest: "+str(userDestinationIndex))
+            for i in range(player1Index,userDestinationIndex+1,1):
+                    
+                    coord= indexToCoordinate[i]
+                    player1_X=coord[0]
+                    player1_Y=coord[1] 
+
+                    player1Index=i 
+
+
+            
+
 
 class Snakes:
     def __init__(self,mouthIndex,AssIndex):
@@ -127,7 +172,11 @@ class Laddder:
 
 
 class LuduBoard:
-    def __init__(self, number, upperLeftX,upperLeftY):
+    def __init__(self, number, upperLeftX,upperLeftY,rowNumber):
+            global indexToRowDict,indexToCoordinate
+            indexToRowDict[number]=rowNumber
+            indexToCoordinate[number]= (upperLeftX,upperLeftY)
+
             self.number = number
             self.upperLeftX = upperLeftX
             self.upperLeftY=upperLeftY
@@ -136,13 +185,20 @@ class LuduBoard:
     def drawRectangle(self):
        # draw a rectangle
         pygame.draw.rect(screen, blue, pygame.Rect(self.upperLeftX, self.upperLeftY, 80, 60), 5)
-        print( self.number)
+        #print( self.number)
 
     def drawNumber(self):
         textNumber = myfont.render(str(self.number), False,white)
         screen.blit(textNumber, ( (self.upperLeftX+80/2) ,self.upperLeftY+ 10))
-        
+
     
+    def getNumber(self):
+        return self.number
+
+    def getSquareBoxCenterPosition(self):
+        return self.upperLeftX+(80/2),self.upperLeftY+(60/2)   
+    
+
 
 def buildLuduBoard():   
         initX=0
@@ -156,7 +212,7 @@ def buildLuduBoard():
             topLeftY=initY
             
 
-            obj=LuduBoard(cnt,topLeftX,topLeftY)
+            obj=LuduBoard(cnt,topLeftX,topLeftY,i)
             cnt-=1      #decreament counter
             list.append(obj)
             
@@ -165,14 +221,14 @@ def buildLuduBoard():
                 if(i%2 !=0):
                         topLeftX += incrX
                         
-                        obj=LuduBoard(cnt,topLeftX,topLeftY)
+                        obj=LuduBoard(cnt,topLeftX,topLeftY,i)
                         cnt-=1      #decreament counter
                         list.append(obj)
                 #if row number is EVEN , box will build up from right to left
                 else:
                     topLeftX -= incrX
                     
-                    obj=LuduBoard(cnt,topLeftX,topLeftY)
+                    obj=LuduBoard(cnt,topLeftX,topLeftY,i)
                     cnt-=1      #decreament counter
                     list.append(obj)
 
@@ -184,8 +240,8 @@ def buildLuduBoard():
 
 
 buildLuduBoard()
-buildSnakes()
-buildLadders()
+
+
 
 def showBoard():
     for x in list:
@@ -194,6 +250,7 @@ def showBoard():
 #Game loop
 running=True
 while running:
+    screen.fill(black)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
