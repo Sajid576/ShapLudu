@@ -68,12 +68,17 @@ class Main:
         player1_Y = screenHeight-40
         player1Index=0
         Player1_validity=0
-        move=0
-        userDestinationX=0
-        userDestinationY=0
+       
+       
 
         #square shaped Box
         myfont = pygame.font.SysFont('Comic Sans MS', 15)
         list=[]
         indexToRowDict={}
         indexToCoordinate={}
+
+        #snakes
+        snakesList=[]
+
+        #Ladder
+        ladderList=[]

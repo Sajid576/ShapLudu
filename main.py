@@ -1,6 +1,8 @@
 from init import *
 from LuduBoard import *
 from User import *
+from Snake import *
+from Ladder import *
 
 
 def throwDice(mx,my):
@@ -36,22 +38,9 @@ def ShowDice():
 
 
 
-
-class Snakes:
-    def __init__(self,mouthIndex,AssIndex):
-        self.mouthIndex=mouthIndex
-        self.AssIndex=AssIndex
-        
-    
-class Laddder:
-    def __init__(self,belowIndex,topIndex):
-        self.belowIndex=belowIndex
-        self.topIndex=topIndex
-        
-
-
-
 buildLuduBoard()
+buildSnakes()
+buildLadders()
 
 #Game loop
 running=True
@@ -63,7 +52,7 @@ while running:
         
         if event.type == pygame.MOUSEBUTTONDOWN:
             mx,my =pygame.mouse.get_pos()
-            print(mx,my)
+            #print(mx,my)
             throwDice(mx,my)
            
     showBoard()

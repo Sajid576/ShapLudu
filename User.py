@@ -1,16 +1,17 @@
 from init import *
-
+from Snake import *
+from Ladder import *
 
 
 def checkValidity():
-        print("validity-->: "+str(Main.Player1_validity))
+       
         if (Main.Player1_validity==1):
             movePlayer1()
         else:
             if(Main.Dice_val==1):
                 Main.player1Index=1
                 Main.Player1_validity=1
-                print("validity(): "+str(Main.Player1_validity))
+                
             else:
                 Main.Player1_validity=0
 
@@ -35,6 +36,9 @@ def movePlayer1():
 
                     Main.player1Index=i 
 
+
+            checkSnake(Main.player1Index)
+            checkLadder(Main.player1Index)
 
 
 def showPlayer1():
