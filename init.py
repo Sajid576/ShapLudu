@@ -15,7 +15,7 @@ class Main:
 
         # create the screen
         screenWidth=800
-        screenHeight=600
+        screenHeight=800
 
         screen = pygame.display.set_mode((screenWidth, screenHeight))
 
@@ -79,6 +79,14 @@ class Main:
 
         #snakes
         snakesList=[]
+        snakesIndexPairList =[(30,2),(40,4),(65,10),(72,32),(97,11)]
+
+        snake_img = pygame.image.load('images/snake1.png')
+        snake_img = pygame.transform.scale(snake_img, (50,40))
 
         #Ladder
         ladderList=[]
+        ladderIndexPairList =[(23,58),(54,87),(15,46)]
+        
+        ladder_img = pygame.image.load('images/ladder3.jpg')
+        ladder_img = pygame.transform.scale(ladder_img, (40,140))

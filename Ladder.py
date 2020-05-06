@@ -27,10 +27,17 @@ def checkLadder(index):
 
 def buildLadders():
 
-        LaddderObj=Laddder(2,14)
-        LaddderObj1=Laddder(3,50)
-        LaddderObj2=Laddder(24,60)
-
+    for x in Main.ladderIndexPairList:
+        LaddderObj=Laddder(x[0],x[1])
         Main.ladderList.append(LaddderObj)
-        Main.ladderList.append(LaddderObj1)
-        Main.ladderList.append(LaddderObj2)
+
+        
+
+
+def showLadders():
+    
+    for x in Main.ladderList:
+            coord=Main.indexToCoordinate[x.getTopIndex()]
+            lat=coord[0]
+            lon=coord[1]
+            Main.screen.blit(Main.ladder_img, (lat+20 ,lon+50))

@@ -56,7 +56,8 @@ while running:
             throwDice(mx,my)
            
     showBoard()
-
+    showSnakes()
+    showLadders()
     ShowDice()
     
     showPlayer1()

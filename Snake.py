@@ -27,10 +27,18 @@ def checkSnake(index):
 
 def buildSnakes():
 
-        snakeObj=Snakes(40,2)
-        snakeObj1=Snakes(80,4)
-        snakeObj2=Snakes(30,4)
-
+    for x in Main.snakesIndexPairList:
+        snakeObj=Snakes(x[0],x[1])
+       
         Main.snakesList.append(snakeObj)
-        Main.snakesList.append(snakeObj1)
-        Main.snakesList.append(snakeObj2)
+        
+
+def showSnakes():
+
+     for x in Main.snakesList:
+            coord=Main.indexToCoordinate[x.getMouthIndex()]
+            lat=coord[0]
+            lon=coord[1]
+            Main.screen.blit(Main.snake_img, (lat+(80/2) ,lon+(60/2)))
+
+       
